@@ -35,8 +35,6 @@ function getHumanChoice() {
         return "paper";
     } else if (userChoice === "scissors") {
         return "scissors";
-    } else {
-
     }
 }
 
