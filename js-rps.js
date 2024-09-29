@@ -40,7 +40,7 @@ function getHumanChoice() {
 }
 
 function playRound(humanChoice, computerChoice) {
-    let roundWon;
+    let roundWon = undefined;
 
     switch (humanChoice) {
         case "rock":
@@ -71,41 +71,59 @@ function playRound(humanChoice, computerChoice) {
             }
             break;
     }
+	displayRoundOutcome(roundWon, humanChoice, computerChoice);
+}
 
+function displayRoundOutcome(roundWon, humanChoice, computerChoice) {
     switch (roundWon) {
         case true:
             console.log(`You win! You played ${humanChoice} which beats ${computerChoice}.`);
-            humanScore++;
             break;
         case false:
             console.log(`You lose! You played ${humanChoice} which loses to ${computerChoice}.`);
-            computerScore++;
             break;
         case undefined:
             console.log(`It's a tie! You both played ${humanChoice}.`);
             break;
     }
+	updateScore(roundWon);
 
+}
+
+function updateScore(roundWon) {
+	if (roundWon == true) {
+		humanScore++;
+	} else if (roundWon == false) {
+		computerScore++;
+	}
+}
+
+function displayScore() {
+	console.log(`Human Score:${humanScore}`);
+    	console.log(`Computer Score:${computerScore}`);
 }
 
 function playGame() {
 	const rBtn = document.querySelector("#rock");
 	const pBtn = document.querySelector("#paper");
 	const sBtn = document.querySelector("#scissors");
-	const computerSelection = getComputerChoice();
-
+	
 	rBtn.addEventListener("click", () => {
-		playRound("rock", computerSelection);
+		playRound("rock", getComputerChoice());
+		displayScore();
 	});
 	pBtn.addEventListener("click", () => {
-		playRound("paper", computerSelection);
+		playRound("paper", getComputerChoice());
+		displayScore();
 	});
 	sBtn.addEventListener("click", () => {
-		playRound("scissors", computerSelection);
+		playRound("scissors", getComputerChoice());
+		displayScore();
 	});
-
-    	console.log(`Human Score:${humanScore}`);
-    	console.log(`Computer Score:${computerScore}`);
+	
+	//displayScore();
+	//console.log(`Human Score:${humanScore}`);
+    	//console.log(`Computer Score:${computerScore}`);
 }
 
 playGame();
