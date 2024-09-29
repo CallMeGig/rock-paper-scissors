@@ -1,4 +1,5 @@
 // Console based rock paper scissors game
+// 
 
 // Score variables
 
@@ -77,7 +78,7 @@ function playRound(humanChoice, computerChoice) {
             humanScore++;
             break;
         case false:
-            console.log(`You lose! You played ${computerChoice} which loses to ${humanChoice}.`);
+            console.log(`You lose! You played ${humanChoice} which loses to ${computerChoice}.`);
             computerScore++;
             break;
         case undefined:
@@ -88,15 +89,23 @@ function playRound(humanChoice, computerChoice) {
 }
 
 function playGame() {
-    for(let i = 0; i < 5; i++){
-        const humanSelection = getHumanChoice();
-        const computerSelection = getComputerChoice();
+	const rBtn = document.querySelector("#rock");
+	const pBtn = document.querySelector("#paper");
+	const sBtn = document.querySelector("#scissors");
+	const computerSelection = getComputerChoice();
 
-        playRound(humanSelection, computerSelection);
-    }
+	rBtn.addEventListener("click", () => {
+		playRound("rock", computerSelection);
+	});
+	pBtn.addEventListener("click", () => {
+		playRound("paper", computerSelection);
+	});
+	sBtn.addEventListener("click", () => {
+		playRound("scissors", computerSelection);
+	});
 
-    console.log(`Human Score:${humanScore}`);
-    console.log(`Computer Score:${computerScore}`);
+    	console.log(`Human Score:${humanScore}`);
+    	console.log(`Computer Score:${computerScore}`);
 }
 
 playGame();
