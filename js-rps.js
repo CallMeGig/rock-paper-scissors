@@ -40,6 +40,22 @@ function getHumanChoice() {
     }
 }
 
+function displayRoundResults(roundWon, humanChoice, computerChoice) {
+    switch (roundWon) {
+        case true:
+            console.log(`You win! You played ${humanChoice} which beats ${computerChoice}.`);
+            humanScore++;
+            break;
+        case false:
+            console.log(`You lose! You played ${computerChoice} which loses to ${humanChoice}.`);
+            computerScore++;
+            break;
+        case undefined:
+            console.log(`It's a tie! You both played ${humanChoice}.`);
+            break;
+    }
+}
+
 function playRound(humanChoice, computerChoice) {
     let roundWon;
 
@@ -73,19 +89,7 @@ function playRound(humanChoice, computerChoice) {
             break;
     }
 
-    switch (roundWon) {
-        case true:
-            console.log(`You win! You played ${humanChoice} which beats ${computerChoice}.`);
-            humanScore++;
-            break;
-        case false:
-            console.log(`You lose! You played ${computerChoice} which loses to ${humanChoice}.`);
-            computerScore++;
-            break;
-        case undefined:
-            console.log(`It's a tie! You both played ${humanChoice}.`);
-            break;
-    }
+    displayRoundResults(roundWon, humanChoice, computerChoice);
 
     if ((humanScore == 5) || (computerScore == 5)) {
         endGame();
@@ -94,12 +98,12 @@ function playRound(humanChoice, computerChoice) {
 
 function endGame() {
     let winner = "";
-    if (humanScore == computerScore) {
-        console.log("The game ends in a draw!");
-    } else if (humanScore > computerScore) {
+
+    if (humanScore > computerScore) {
         winner = "human";
     } else winner = "computer";
-    console.log(`Game Over! The ${winner} wins the game: ${Math.max(humanScore,computerScore)} to ${Math.min(humanScore,computerScore)}`);
+    console.log(`Game Over! The ${winner} wins the game.`);
+    displayScore();
 }
 
 function addBtnListeners(btn1,btn2,btn3) {
@@ -120,6 +124,10 @@ function addBtnListeners(btn1,btn2,btn3) {
     })
 }
 
+function displayScore() {
+    console.log(`Human Score:${humanScore}`);
+    console.log(`Computer Score:${computerScore}`);
+}
 function playGame() {
     const rBtn = document.querySelector("#rock");
     const pBtn = document.querySelector("#paper");
@@ -131,8 +139,7 @@ function playGame() {
         addBtnListeners(rBtn,pBtn,sBtn);
     }
 
-    console.log(`Human Score:${humanScore}`);
-    console.log(`Computer Score:${computerScore}`);
+    displayScore();
 }
 
 playGame();
