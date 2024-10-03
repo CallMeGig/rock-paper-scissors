@@ -41,19 +41,28 @@ function getHumanChoice() {
 }
 
 function displayRoundResults(roundWon, humanChoice, computerChoice) {
+    const scoreCard = document.querySelector("#scoreboard");
+    let roundResult = '';
+    const text = document.createElement('p');
+    scoreCard.innerHTML = '';
+
     switch (roundWon) {
         case true:
-            console.log(`You win! You played ${humanChoice} which beats ${computerChoice}.`);
+            roundResult = `You win! You played ${humanChoice} which beats ${computerChoice}.`;
             humanScore++;
             break;
         case false:
-            console.log(`You lose! You played ${computerChoice} which loses to ${humanChoice}.`);
+            roundResult = `You lose! You played ${computerChoice} which loses to ${humanChoice}.`;
             computerScore++;
             break;
         case undefined:
-            console.log(`It's a tie! You both played ${humanChoice}.`);
+            roundResult = `It's a tie! You both played ${humanChoice}.`;
             break;
     }
+
+    text.textContent = roundResult;
+    scoreCard.appendChild(text);
+
 }
 
 function playRound(humanChoice, computerChoice) {
@@ -142,6 +151,7 @@ function displayScore() {
     scoreCard.appendChild(humanCard);
     scoreCard.appendChild(computerCard);
 }
+
 function playGame() {
     const rBtn = document.querySelector("#rock");
     const pBtn = document.querySelector("#paper");
