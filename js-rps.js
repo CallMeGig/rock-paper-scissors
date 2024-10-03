@@ -125,8 +125,22 @@ function addBtnListeners(btn1,btn2,btn3) {
 }
 
 function displayScore() {
-    console.log(`Human Score:${humanScore}`);
-    console.log(`Computer Score:${computerScore}`);
+    const scoreCard = document.querySelector("#scoreboard");
+    const humanCard = document.createElement('p');
+    const computerCard = document.createElement('p');
+    const outcome = document.createElement('h3');
+
+    if (humanScore > computerScore) {
+        outcome.textContent = "You Win!";
+    } else outcome.textContent = "You Lose!";
+
+
+    humanCard.textContent = `Human Score: ${humanScore}`;
+    computerCard.textContent = `Computer Score: ${computerScore}`;
+
+    scoreCard.appendChild(outcome);
+    scoreCard.appendChild(humanCard);
+    scoreCard.appendChild(computerCard);
 }
 function playGame() {
     const rBtn = document.querySelector("#rock");
@@ -138,8 +152,6 @@ function playGame() {
     } else {
         addBtnListeners(rBtn,pBtn,sBtn);
     }
-
-    displayScore();
 }
 
 playGame();
