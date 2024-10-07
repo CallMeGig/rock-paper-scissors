@@ -5,29 +5,22 @@
 
 let humanScore = 0;
 let computerScore = 0;
+const gameOptions = ["rock", "paper", "scissors"];
 
 
 
 // getComputerChoice randomly returns "rock", "paper" or "scissors"
-
 function getComputerChoice() {
     let intChoice = Math.floor(Math.random() * 3);
 
-    if (intChoice == 0) {
-        return "rock";
-    } else if (intChoice == 1) {
-        return "paper";
-    } else return "scissors";
+    return gameOptions[intChoice];
 }
 
-
-// getHumanChoice gets users valid choice and returns it
-
+/** getHumanChoice gets users valid choice and returns it
 function getHumanChoice() {
-    const choices = ["rock", "paper", "scissors"]
     let userChoice = prompt("Pick your weapon.", "rock, paper or scissors").toLowerCase();
 
-    while (!choices.includes(userChoice)) {
+    while (!gameOptions.includes(userChoice)) {
         userChoice = prompt("Please enter one of the aproved weapons.", "Approved weapons: rock, paper or scissors.")
     }
 
@@ -38,13 +31,13 @@ function getHumanChoice() {
     } else if (userChoice === "scissors") {
         return "scissors";
     }
-}
+} **/
 
 function displayRoundResults(roundWon, humanChoice, computerChoice) {
-    const scoreCard = document.querySelector("#scoreboard");
+    const commentaryDiv = document.querySelector("#commentary");
     let roundResult = '';
     const text = document.createElement('p');
-    scoreCard.innerHTML = '';
+    commentaryDiv.innerHTML = '';
 
     switch (roundWon) {
         case true:
@@ -61,7 +54,7 @@ function displayRoundResults(roundWon, humanChoice, computerChoice) {
     }
 
     text.textContent = roundResult;
-    scoreCard.appendChild(text);
+    commentaryDiv.appendChild(text);
 
 }
 
@@ -107,27 +100,41 @@ function playRound(humanChoice, computerChoice) {
 
 function endGame() {
     let winner = "";
+    const scoreCard = document.querySelector('#commentary');
+    scoreCard.innerHTML = '';
+    const controlDiv = document.querySelector('#controls');
+    controlDiv.innerHTML = '';
+
 
     if (humanScore > computerScore) {
         winner = "human";
     } else winner = "computer";
-    console.log(`Game Over! The ${winner} wins the game.`);
+    scoreCard.textContent = `Game Over! The ${winner} wins the game.`;
     displayScore();
 }
 
+function rmvBtnListeners(btnR,btnP,btnS) {
+
+
+    btnR.removeEventListener("click", handleR());
+    btnP.removeEventListener("click", handleP());
+    btnS.removeEventListener("click", handleS());
+}
+
+
 function addBtnListeners(btn1,btn2,btn3) {
 
-    btn1.addEventListener("click", ()=> {
+    btn1.addEventListener("click", function handleR() {
         playRound("rock", getComputerChoice());
         //diplayScore();
     })
 
-    btn2.addEventListener("click", ()=> {
+    btn2.addEventListener("click", function handleP() {
         playRound("paper", getComputerChoice());
         //diplayScore();
     })
 
-    btn3.addEventListener("click", ()=> {
+    btn3.addEventListener("click", function handleS() {
         playRound("scissors", getComputerChoice());
         //diplayScore();
     })
@@ -157,11 +164,8 @@ function playGame() {
     const pBtn = document.querySelector("#paper");
     const sBtn = document.querySelector("#scissors");
 
-    if (humanScore == 3) {
-        console.log(humanScore);
-    } else {
-        addBtnListeners(rBtn,pBtn,sBtn);
-    }
+    addBtnListeners(rBtn,pBtn,sBtn);
+
 }
 
 playGame();
