@@ -5,6 +5,8 @@
 
 let humanScore = 0;
 let computerScore = 0;
+let gameWon = false;
+
 const gameOptions = ["rock", "paper", "scissors"];
 
 
@@ -45,16 +47,24 @@ function displayRoundResults(roundWon, humanChoice, computerChoice) {
             humanScore++;
             break;
         case false:
-            roundResult = `You lose! You played ${computerChoice} which loses to ${humanChoice}.`;
+            roundResult = `You lose! You played ${humanChoice} which loses to ${computerChoice}.`;
             computerScore++;
             break;
         case undefined:
             roundResult = `It's a tie! You both played ${humanChoice}.`;
             break;
     }
-
+    displayScore();
     text.textContent = roundResult;
     commentaryDiv.appendChild(text);
+
+}
+
+function clearDisplay() {
+    const commentaryDiv = document.querySelector('#commentary');
+    commentaryDiv.textContent = ' ';
+    const scoreboardDiv = document.querySelector('#scoreboard');
+    scoreboardDiv.textContent = ' ';
 
 }
 
@@ -98,28 +108,69 @@ function playRound(humanChoice, computerChoice) {
     }
 }
 
-function endGame() {
-    let winner = "";
-    const scoreCard = document.querySelector('#commentary');
-    scoreCard.innerHTML = '';
+function addGameBtns() {
     const controlDiv = document.querySelector('#controls');
     controlDiv.innerHTML = '';
 
+    const rBtn = document.createElement('button');
+    const pBtn = document.createElement('button');
+    const sBtn = document.createElement('button');
+
+    rBtn.textContent = "ROCK";
+    pBtn.textContent = "PAPER";
+    sBtn.textContent = "SCISSORS";
+
+    controlDiv.appendChild(rBtn);
+    controlDiv.appendChild(pBtn);
+    controlDiv.appendChild(sBtn);
+
+    addBtnListeners(rBtn,pBtn,sBtn);
+}
+
+function addRestartBtn() {
+    const controlDiv = document.querySelector('#controls');
+    const restartBtn = document.createElement('button');
+
+    restartBtn.textContent = "RESTART";
+    restartBtn.addEventListener('click', restartGame)
+
+    controlDiv.appendChild(restartBtn);
+}
+
+function restartGame() {
+    humanScore = 0;
+    computerScore = 0;
+
+    addGameBtns();
+    clearDisplay();
+    gameWon = false;
+    //displayScore();
+}
+
+function endGame() {
+    let winner = "";
+    const controlDiv = document.querySelector('#controls');
+    controlDiv.innerHTML = '';
+
+    const scoreCard = document.querySelector('#commentary');
+    scoreCard.innerHTML = '';
 
     if (humanScore > computerScore) {
         winner = "human";
     } else winner = "computer";
+    gameWon = true;
     scoreCard.textContent = `Game Over! The ${winner} wins the game.`;
     displayScore();
+    addRestartBtn();
 }
 
-function rmvBtnListeners(btnR,btnP,btnS) {
+/**function rmvBtnListeners(btnR,btnP,btnS) {
 
 
     btnR.removeEventListener("click", handleR());
     btnP.removeEventListener("click", handleP());
     btnS.removeEventListener("click", handleS());
-}
+}**/
 
 
 function addBtnListeners(btn1,btn2,btn3) {
@@ -142,13 +193,17 @@ function addBtnListeners(btn1,btn2,btn3) {
 
 function displayScore() {
     const scoreCard = document.querySelector("#scoreboard");
+    scoreCard.innerHTML = '';
     const humanCard = document.createElement('p');
     const computerCard = document.createElement('p');
     const outcome = document.createElement('h3');
-
+    let stake = '';
+    if (gameWon == false) {
+        stake = "Round";
+    } else stake = "Game";
     if (humanScore > computerScore) {
-        outcome.textContent = "You Win!";
-    } else outcome.textContent = "You Lose!";
+        outcome.textContent = `${stake} Won!`;
+    } else outcome.textContent = `${stake} Lost!`;
 
 
     humanCard.textContent = `Human Score: ${humanScore}`;
@@ -160,11 +215,15 @@ function displayScore() {
 }
 
 function playGame() {
-    const rBtn = document.querySelector("#rock");
-    const pBtn = document.querySelector("#paper");
-    const sBtn = document.querySelector("#scissors");
+    const controlDiv = document.querySelector('#controls');
+    controlDiv.innerHTML = '';
 
-    addBtnListeners(rBtn,pBtn,sBtn);
+    addGameBtns();
+
+    if ((humanScore == 5) || (computerScore == 5)) {
+
+        endGame()
+    }
 
 }
 
