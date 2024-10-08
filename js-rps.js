@@ -9,31 +9,12 @@ let gameWon = false;
 
 const gameOptions = ["rock", "paper", "scissors"];
 
-
-
 // getComputerChoice randomly returns "rock", "paper" or "scissors"
 function getComputerChoice() {
     let intChoice = Math.floor(Math.random() * 3);
 
     return gameOptions[intChoice];
 }
-
-/** getHumanChoice gets users valid choice and returns it
-function getHumanChoice() {
-    let userChoice = prompt("Pick your weapon.", "rock, paper or scissors").toLowerCase();
-
-    while (!gameOptions.includes(userChoice)) {
-        userChoice = prompt("Please enter one of the aproved weapons.", "Approved weapons: rock, paper or scissors.")
-    }
-
-    if (userChoice === "rock") {
-        return "rock";
-    } else if (userChoice === "paper") {
-        return "paper";
-    } else if (userChoice === "scissors") {
-        return "scissors";
-    }
-} **/
 
 function displayRoundResults(roundWon, humanChoice, computerChoice) {
     const commentaryDiv = document.querySelector("#commentary");
@@ -163,15 +144,6 @@ function endGame() {
     displayScore();
     addRestartBtn();
 }
-
-/**function rmvBtnListeners(btnR,btnP,btnS) {
-
-
-    btnR.removeEventListener("click", handleR());
-    btnP.removeEventListener("click", handleP());
-    btnS.removeEventListener("click", handleS());
-}**/
-
 
 function addBtnListeners(btn1,btn2,btn3) {
 
